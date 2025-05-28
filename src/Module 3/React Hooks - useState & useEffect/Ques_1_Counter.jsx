@@ -6,8 +6,6 @@
 //     - Display the current count value.
 //     - Write your code within the file, by the name of component as Counter
 
-
-import './App.css';
 import React, { useState } from 'react';
 
 function Counter() {
@@ -25,13 +23,4 @@ function Counter() {
     );
 }
 
-function App() {
-    return (
-        <>
-            {/* Add your component here */}
-            <Counter />
-        </>
-    );
-}
-
-export default App;
+export default Counter;
