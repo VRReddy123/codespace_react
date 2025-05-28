@@ -8,7 +8,7 @@ import React, { useState, useRef, useEffect } from 'react';
 
 function ListItem() {
     const [newItem, setNewItem] = useState('');
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState(new Set());
     const inputRef = useRef(null);
 
     useEffect(() => {
@@ -19,8 +19,8 @@ function ListItem() {
 
     const addItem = () => {
         if (newItem.trim() !== '') {
-            if (!items.includes(newItem)) {
-                setItems([...items, newItem]);
+            if (!items.has(newItem)) {
+                setItems(new Set([...items, newItem]));
                 setNewItem('');
             } else {
                 alert('Item already exists!');
@@ -29,7 +29,16 @@ function ListItem() {
     };
 
     const handleChange = (event) => {
-        setNewItem(event.target.value);
+        if (event.target.value.length <= 20 && /^[a-zA-Z0-9\s]*$/.test(event.target.value)) {
+            setNewItem(event.target.value);
+        } else {
+            alert("Input must be under 20 characters and alphanumeric only.");
+        }
+    };
+
+    // Function to generate a simple unique ID (not cryptographically strong)
+    const generateId = () => {
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     };
 
     return (
@@ -40,11 +49,12 @@ function ListItem() {
                 onChange={handleChange}
                 placeholder="Enter an item"
                 ref={inputRef}
+                maxLength="20"
             />
             <button onClick={addItem}>Add</button>
             <ul>
-                {items.map((item, index) => (
-                    <li key={index}>{item}</li>
+                {Array.from(items).map((item) => (
+                    <li key={item}>{item}</li>
                 ))}
             </ul>
         </div>
