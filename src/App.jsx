@@ -1,12 +1,12 @@
 import './App.css'
 import React from 'react';
-import ListItem from './Module 3/React Hooks - useState & useEffect/Ques_5_List_Item.jsx';
+import FetchData from './Module 3/React Hooks - useState & useEffect/Ques_6_Fetch_Data.jsx';
 function App() {
 
   return (
     <>
       {/* Add your component here */}
-       <ListItem />
+       <FetchData />
     </>
   )
 }
