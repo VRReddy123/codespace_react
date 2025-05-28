@@ -5,7 +5,7 @@
 // Steps:
 //     - Write your code within the file, by the name of component as Complex_Form
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 function CompleteForm() {
     const [formData, setFormData] = useState({
@@ -14,17 +14,52 @@ function CompleteForm() {
         password: '',
     });
 
-    const handleChange = (event) => {
+    const [errors, setErrors] = useState({  // Separate state for error messages
+        email: '',
+        password: '',
+    });
+
+    // Debounced input handler
+    const debouncedHandleChange = useCallback((event) => {
         const { name, value } = event.target;
+
         setFormData(prevState => ({
             ...prevState,
             [name]: value,
         }));
-    };
+
+        if (name === 'email') {
+            validateEmail(value);
+        }
+
+        if (name === 'password') {
+            validatePassword(value);
+        }
+
+    }, []);  // useCallback's dependency array - empty since no external variables are used
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('Form Data:', formData); // Or display however you prefer
+    };
+
+    // Email validation function
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setErrors(prevErrors => ({ ...prevErrors, email: 'Invalid email format' }));
+        } else {
+            setErrors(prevErrors => ({ ...prevErrors, email: '' })); // Clear error
+        }
+    };
+
+    // Password validation function (simple example)
+    const validatePassword = (password) => {
+        if (password.length < 8) {
+            setErrors(prevErrors => ({ ...prevErrors, password: 'Password must be at least 8 characters' }));
+        } else {
+            setErrors(prevErrors => ({ ...prevErrors, password: '' }));  // Clear error
+        }
     };
 
     return (
@@ -36,7 +71,7 @@ function CompleteForm() {
                     id="username"
                     name="username"
                     value={formData.username}
-                    onChange={handleChange}
+                    onChange={debouncedHandleChange}
                     required
                 />
 
@@ -46,9 +81,10 @@ function CompleteForm() {
                     id="email"
                     name="email"
                     value={formData.email}
-                    onChange={handleChange}
+                    onChange={debouncedHandleChange}
                     required
                 />
+                {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}  {/* Email error display */}
 
                 <label htmlFor="password">Password:</label>
                 <input
@@ -56,9 +92,10 @@ function CompleteForm() {
                     id="password"
                     name="password"
                     value={formData.password}
-                    onChange={handleChange}
+                    onChange={debouncedHandleChange}
                     required
                 />
+                {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}  {/* Password error display */}
 
                 <button type="submit">Register</button>
             </form>
