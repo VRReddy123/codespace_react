@@ -13,7 +13,13 @@ function ToggleVisibility() {
   const [isVisible, setIsVisible] = useState(true);
 
   const toggleVisibility = () => {
-    setIsVisible(!isVisible);
+    try {
+      setIsVisible(!isVisible);
+    } catch (error) {
+      console.error("Error toggling visibility:", error);  // Log the error
+      // Optionally, display an error message to the user.  For a very basic implementation:
+      alert("An error occurred while toggling visibility.");
+    }
   };
 
   return (
