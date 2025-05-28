@@ -9,9 +9,17 @@ import React, { useState } from 'react';
 
 function SimpleForm() {
   const [name, setName] = useState('');
+  const [error, setError] = useState(''); // New state for error message
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent the form from refreshing the page
+    event.preventDefault();
+
+    if (name.trim() === '') {
+      setError('Name field cannot be empty.');
+      return;
+    }
+
+    setError(''); // Clear any previous error
     alert(`You entered: ${name}`);
   };
 
@@ -29,6 +37,7 @@ function SimpleForm() {
         onChange={handleChange}
         placeholder="Enter your name"
       />
+      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
       <button type="submit">Submit</button>
     </form>
   );
