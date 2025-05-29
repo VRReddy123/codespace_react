@@ -6,3 +6,25 @@
 //     - Use useEffect to update the document title whenever the count changes.
 //     - Create a button to increase the count and see the document title change.
 //     - Write your code within the file, by the name of component as Title_Update
+
+import React, { useState, useEffect } from 'react';
+
+function TitleUpdate() {
+  const [clickCount, setClickCount] = useState(0);
+
+  useEffect(() => {
+    document.title = `Clicked ${clickCount} times`;
+  }, [clickCount]);
+
+  const handleClick = () => {
+    setClickCount(clickCount + 1);
+  };
+
+  return (
+    <div>
+      <button onClick={handleClick}>Click me</button>
+    </div>
+  );
+}
+
+export default TitleUpdate;
