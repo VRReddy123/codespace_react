@@ -1,12 +1,12 @@
 import './App.css'
 import React from 'react';
-import FavoriteColor from './Module 3/React Hooks - useState & useEffect/Ques_11_Favorite_Color.jsx';
+import WindowWidth from './Module 3/React Hooks - useState & useEffect/Ques_12_Window_Width.jsx';
 function App() {
 
   return (
     <>
       {/* Add your component here */}
-          <FavoriteColor />
+           <WindowWidth />
     </>
   )
 }
