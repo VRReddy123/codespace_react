@@ -9,22 +9,26 @@
 
 import React, { useState, useEffect } from 'react';
 
+const MAX_COUNT = 100; // Define a maximum count
+
 function TitleUpdate() {
-  const [clickCount, setClickCount] = useState(0);
+    const [clickCount, setClickCount] = useState(0);
 
-  useEffect(() => {
-    document.title = `Clicked ${clickCount} times`;
-  }, [clickCount]);
+    useEffect(() => {
+        document.title = `Clicked ${clickCount} times`;
+    }, [clickCount]);
 
-  const handleClick = () => {
-    setClickCount(clickCount + 1);
-  };
+    const handleClick = () => {
+        setClickCount((prevCount) =>
+            prevCount < MAX_COUNT ? prevCount + 1 : prevCount
+        );
+    };
 
-  return (
-    <div>
-      <button onClick={handleClick}>Click me</button>
-    </div>
-  );
+    return (
+        <div>
+            <button onClick={handleClick}>Click me</button>
+        </div>
+    );
 }
 
 export default TitleUpdate;
