@@ -1,12 +1,12 @@
 import './App.css'
 import React from 'react';
-import CompleteForm from './Module 3/React Hooks - useState & useEffect/Ques_7_Comple_Form.jsx';
+import TimeoutCounter from './Module 3/React Hooks - useState & useEffect/Ques_8_Timeout_Counter.jsx';
 function App() {
 
   return (
     <>
       {/* Add your component here */}
-        <CompleteForm />
+         <TimeoutCounter />
     </>
   )
 }

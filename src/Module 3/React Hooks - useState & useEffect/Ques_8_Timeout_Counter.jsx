@@ -5,3 +5,25 @@
 //     - setInterval : Repeatedly increments the count every 1 second.
 //     - clearInterval(timer) : Clears the timer when component unmounts to prevent memory leaks.
 //     - Write your code within the file, by the name of component as Timeout_Counter
+
+import React, { useState, useEffect } from 'react';
+
+function TimeoutCounter() {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setCount(prevCount => prevCount + 1);
+        }, 1000);
+
+        return () => clearTimeout(timeoutId);
+    }, [count]);
+
+    return (
+        <div>
+            <h1>Counter: {count}</h1>
+        </div>
+    );
+}
+
+export default TimeoutCounter;
