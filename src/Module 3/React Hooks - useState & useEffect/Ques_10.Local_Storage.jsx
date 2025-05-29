@@ -6,7 +6,7 @@
 //     - useEffect([input]) : Updates local storage each time input changes.
 //     - Write your code within the file, by the name of component as Local_Storage.
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 function LocalStorage() {
     const [text, setText] = useState(() => {
@@ -20,24 +20,34 @@ function LocalStorage() {
         }
     });
 
-    const debouncedSetText = useCallback(
-        (value) => {
+    const debouncedSetText = useRef(null);
+
+    useEffect(() => {
+        debouncedSetText.current = (value) => {
             try {
                 localStorage.setItem('myText', value);
             } catch (error) {
                 console.error("Error setting local storage:", error);
                 alert("Error writing to local storage. Your input may not be saved.");
             }
-        },
-        [] // Debounce function is created once
-    );
+        };
+    }, [])
 
-    useEffect(() => {
-            debouncedSetText(text);
-    }, [text, debouncedSetText]);
+    const debounce = (func, delay) => {
+        let timeoutId;
+        return (...args) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => func(...args), delay);
+        };
+    };
 
     const handleChange = (event) => {
-        setText(event.target.value);
+        const newText = event.target.value;
+        const debouncedFunc = debounce(() => {
+            debouncedSetText.current(newText);
+        }, 300);
+        setText(newText);
+        debouncedFunc();
     };
 
     return (
