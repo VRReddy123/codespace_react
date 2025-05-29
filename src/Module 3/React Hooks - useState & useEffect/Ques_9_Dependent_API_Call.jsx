@@ -8,6 +8,33 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 
+// Presentation Component: User List
+const UserList = React.memo(({ users, handleUserClick }) => (
+    <ul>
+        {users.map(user => (
+            <li key={user.id} onClick={() => handleUserClick(user.id)} style={{ cursor: 'pointer' }}>
+                {user.name}
+            </li>
+        ))}
+    </ul>
+));
+
+// Presentation Component: Post List
+const PostList = React.memo(({ posts }) => (
+    <>
+        <h2>Posts</h2>
+        {posts.length === 0 ? (
+            <p>No posts for selected user.</p>
+        ) : (
+            <ul>
+                {posts.map(post => (
+                    <li key={post.id}>{post.title}</li>
+                ))}
+            </ul>
+        )}
+    </>
+));
+
 function DependentAPICall() {
     const [users, setUsers] = useState([]);
     const [selectedUserId, setSelectedUserId] = useState(null);
@@ -65,7 +92,7 @@ function DependentAPICall() {
 
     const handleUserClick = useCallback((userId) => {
         setSelectedUserId(userId);
-    }, []);
+    }, [setSelectedUserId]); //Ensure `handleUserClick` captures the latest state
 
     if (loading) {
         return <div>Loading...</div>;
@@ -78,24 +105,8 @@ function DependentAPICall() {
     return (
         <div>
             <h2>Users</h2>
-            <ul>
-                {users.map(user => (
-                    <li key={user.id} onClick={() => handleUserClick(user.id)} style={{ cursor: 'pointer' }}>
-                        {user.name}
-                    </li>
-                ))}
-            </ul>
-
-            <h2>Posts</h2>
-            {posts.length === 0 ? (
-                <p>No posts for selected user.</p>
-            ) : (
-                <ul>
-                    {posts.map(post => (
-                        <li key={post.id}>{post.title}</li>
-                    ))}
-                </ul>
-            )}
+            <UserList users={users} handleUserClick={handleUserClick} />
+            <PostList posts={posts} />
         </div>
     );
 }
