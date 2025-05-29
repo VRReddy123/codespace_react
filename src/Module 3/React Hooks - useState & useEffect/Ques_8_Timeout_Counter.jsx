@@ -9,21 +9,21 @@
 import React, { useState, useEffect } from 'react';
 
 function TimeoutCounter() {
-    const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
-    useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            setCount(prevCount => prevCount + 1);
-        }, 1000);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount(prevCount => prevCount + 1);
+    }, 1000);
 
-        return () => clearTimeout(timeoutId);
-    }, [count]);
+    return () => clearInterval(intervalId);
+  }, []); // Runs only on mount and unmount.
 
-    return (
-        <div>
-            <h1>Counter: {count}</h1>
-        </div>
-    );
+  return (
+    <div>
+      <h1>Counter: {count}</h1>
+    </div>
+  );
 }
 
 export default TimeoutCounter;
