@@ -1,12 +1,12 @@
 import './App.css'
 import React from 'react';
-import TimeoutCounter from './Module 3/React Hooks - useState & useEffect/Ques_8_Timeout_Counter.jsx';
+import DependentAPICall from './Module 3/React Hooks - useState & useEffect/Ques_9_Dependent_API_Call.jsx';
 function App() {
 
   return (
     <>
       {/* Add your component here */}
-         <TimeoutCounter />
+          <DependentAPICall />
     </>
   )
 }
