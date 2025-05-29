@@ -1,12 +1,12 @@
 import './App.css'
 import React from 'react';
-import LocalStorage from './Module 3/React Hooks - useState & useEffect/Ques_10.Local_Storage.jsx';
+import FavoriteColor from './Module 3/React Hooks - useState & useEffect/Ques_11_Favorite_Color.jsx';
 function App() {
 
   return (
     <>
       {/* Add your component here */}
-            <LocalStorage />
+          <FavoriteColor />
     </>
   )
 }
