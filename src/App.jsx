@@ -1,12 +1,12 @@
 import './App.css'
 import React from 'react';
-import DependentAPICall from './Module 3/React Hooks - useState & useEffect/Ques_9_Dependent_API_Call.jsx';
+import LocalStorage from './Module 3/React Hooks - useState & useEffect/Ques_10.Local_Storage.jsx';
 function App() {
 
   return (
     <>
       {/* Add your component here */}
-          <DependentAPICall />
+            <LocalStorage />
     </>
   )
 }
