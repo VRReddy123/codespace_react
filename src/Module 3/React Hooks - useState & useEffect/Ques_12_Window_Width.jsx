@@ -7,14 +7,23 @@
 //     - Update the width state whenever the window is resized and display it.
 //     - Write your code within the file, by the name of component as Window_Width
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 function WindowWidth() {
     const [windowWidth, setWindowWidth] = useState(0); // Initialize to 0 or a default value
 
+    // Use useRef to hold the debounce timer ID
+    const debounceTimer = useRef(null);
+
     const debouncedSetWindowWidth = useCallback(
         (width) => {
-            setWindowWidth(width);
+            // Clear any existing timer
+            clearTimeout(debounceTimer.current);
+
+            // Set a new timer
+            debounceTimer.current = setTimeout(() => {
+                setWindowWidth(width);
+            }, 200); // Adjust delay as needed (e.g., 200ms)
         },
         [] // Dependency array is empty - the debounced function does not depend on any state
     );
@@ -36,8 +45,9 @@ function WindowWidth() {
         // Remove event listener on unmount
         return () => {
             window.removeEventListener('resize', handleResize);
+            clearTimeout(debounceTimer.current); // Clear the timer on unmount
         };
-    }, []);
+    }, [debouncedSetWindowWidth]);
 
     return (
         <div>
